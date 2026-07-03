@@ -55,6 +55,8 @@ func DeleteReleaseLock(c *gin.Context) {
 
 	if state.Lock.Owner == user {
 		state.Lock.Owner = ""
+		// set expires to start of epoch so it basically is always expired
+		state.Lock.Expires = time.Unix(0, 0)
 	}
 
 	c.JSON(http.StatusOK, gin.H{"released": true})
