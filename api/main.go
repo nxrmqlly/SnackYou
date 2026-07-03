@@ -15,15 +15,15 @@ func main() {
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "*")
 	})
 
-	r.OPTIONS("/*path", func(c *gin.Context) {
-		c.AbortWithStatus(204)
+	r.GET("/api/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{"ok": true})
 	})
 
 	/*
 		web:
 		GET    /api/state       dashboard
 		PUT    /api/state       move turret
-		
+
 		POST   /api/fire        fire snack
 
 		GET    /api/lock        lock info
@@ -40,6 +40,7 @@ func main() {
 
 	r.POST("/api/fire", endpoints.PostFire)
 
+	r.GET("/api/lock", endpoints.GetLock)
 	r.POST("/api/lock", endpoints.PostRequestLock)
 	r.DELETE("/api/lock", endpoints.DeleteReleaseLock)
 
