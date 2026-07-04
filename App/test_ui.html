@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Snack Turret Test UI</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f0f0f;
+            color: #eaeaea;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #333;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            background: #151515;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 4px;
+            cursor: pointer;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        pre {
+            background: #000;
+            padding: 10px;
+            overflow: auto;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .col {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🍿 Snack Turret Control Panel</h1>
+
+    <script>
+        const BASE_URL = "http://localhost:8080"; // CHANGE THIS
+
+        let user = "ritam";
+        let yaw = 90;
+        let pitch = 20;
+
+        async function requestLock() {
+            const res = await fetch(`${BASE_URL}/api/lock`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user })
+            });
+            console.log(await res.json());
+        }
+
+        async function releaseLock() {
+            const res = await fetch(`${BASE_URL}/api/lock?user=${user}`, {
+                method: "DELETE",
+            });
+
+            console.log(await res.json());
+        }
+
+        async function updateState() {
+            const res = await fetch(`${BASE_URL}/api/state`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user,
+                    yaw: Number(yaw),
+                    pitch: Number(pitch)
+                })
+            });
+
+            console.log(await res.json());
+        }
+
+        async function fire() {
+            const res = await fetch(`${BASE_URL}/api/fire`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user })
+            });
+
+            console.log(await res.json());
+        }
+
+        async function getStatus() {
+            try {
+                const res = await fetch(`${BASE_URL}/api/state`);
+                const data = await res.json();
+
+                document.getElementById("status").innerText =
+                    JSON.stringify(data, null, 2);
+            } catch (e) {
+                document.getElementById("status").innerText = "Backend offline";
+            }
+        }
+
+        setInterval(getStatus, 200);
+    </script>
+
+    <div class="card">
+        <h3>User</h3>
+        <input value="ritam" oninput="user=this.value" />
+    </div>
+
+    <div class="card">
+        <h3>Lock Control</h3>
+        <button onclick="requestLock()">🔒 Request Lock</button>
+        <button onclick="releaseLock()">🔓 Release Lock</button>
+    </div>
+
+    <div class="card">
+        <h3>Turret Control (Yaw / Pitch)</h3>
+
+        <label>Yaw: <span id="yawVal">90</span></label>
+        <input type="range" min="0" max="180" value="90"
+            oninput="yaw=this.value; document.getElementById('yawVal').innerText=yaw; updateState()" />
+
+        <br><br>
+
+        <label>Pitch: <span id="pitchVal">20</span></label>
+        <input type="range" min="0" max="90" value="20"
+            oninput="pitch=this.value; document.getElementById('pitchVal').innerText=pitch; updateState()" />
+    </div>
+
+    <div class="card">
+        <h3>Fire</h3>
+        <button onclick="fire()" style="font-size:18px;">🔥 FIRE SNACK</button>
+    </div>
+
+    <div class="card">
+        <h3>Live Status</h3>
+        <pre id="status">loading...</pre>
+    </div>
+
+</body>
+
+</html>

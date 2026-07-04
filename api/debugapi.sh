@@ -1,0 +1,1 @@
+air --build.cmd "go build -o bin/api.exe main.go" --build.entrypoint "./bin/api.exe"
