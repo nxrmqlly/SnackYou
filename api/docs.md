@@ -1,7 +1,3 @@
-Below is a clean, teammate-ready **API documentation** for your SnackYou turret system. You can literally paste this into a README or send as-is.
-
----
-
 # 🍿 SnackYou Turret API Documentation
 
 ## Overview

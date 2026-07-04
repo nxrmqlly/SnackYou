@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnackYou</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">SnackYou</div>
+    <hr>
+    <div class="subhead">Current State</div>
+    <div class="statebox">
+        <div class="staterow">
+            <div class="state" id="yaw">yaw: </div>
+            <div class="state" id="pitch">pitch: </div>
+            <div class="state" id="fire">fire: </div>
+        </div>
+        <div class="staterow">
+            <div class="state" id="version">version: </div>
+            <div class="state" id="owner">owner: </div>
+            <div class="state" id="expires">expires: </div>
+        </div>
+    </div>
+    <div class="lockbox">
+        <button id="lock">Lock User</button>
+        <button id="release">Release User</button>
+    </div>
+    <div class="response" id="response"></div>
+    <div class="slidecontainer">
+        <input type="range" min="0" max="360" value="0" class="slider" id="yawSlider">
+        <div class="state" id="yawDisplay"></div>
+    </div>
+    <div class="slidecontainer">
+        <input type="range" min="0" max="360" value="0" class="slider" id="pitchSlider">
+        <div class="state" id="pitchDisplay"></div>
+    </div>
+    <button class="firebutton" id="fireButton">FIRE!!!</button>
+    <script src="api.js"></script>
+</body>
+</html>
