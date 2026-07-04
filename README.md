@@ -1,2 +1,6 @@
-# SnackYou
-A bot that follows you around and sends food projectiles at you on demand.
+# Sn*ck You!
+Do you ever feel lazy to get yourself a snack?
+
+Well, worry no more! Sn*ck You! lets you aim + launch a snack at yourself.
+
+Or just launch it at your friends. lol.
